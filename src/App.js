@@ -39,7 +39,22 @@ class App extends Component {
           padding:'8px'
         };
 
+        let personShowCase = null;
+        if(this.state.showcasePerson){
+          personShowCase = (
+            <div>
+              <Person 
+                Name={this.state.persons[0].name}
+                Age={this.state.persons[0].age}
+              />
+              <Person 
+                Name={this.state.persons[1].name} 
+                Age={this.state.persons[1].age}
+                inputNameHandler = {this.inputNameChangeHandler}/> 
+            </div>
+          );
 
+        }
 
         return(
           <div className="App">
@@ -47,23 +62,7 @@ class App extends Component {
             <button onClick={this.buttonToggleHandler} style={style}>
              Toggle Name
               </button>
-              {
-                this.state.showcasePerson ?
-                  <div>
-                    <Person 
-                      Name={this.state.persons[0].name}
-                      Age={this.state.persons[0].age}
-                    />
-
-                      <Person 
-                        Name={this.state.persons[1].name} 
-                        Age={this.state.persons[1].age}
-                        inputNameHandler = {this.inputNameChangeHandler}/> 
-                  </div>
-                  : null
-
-              }
-
+              {personShowCase}
           </div>
         ) 
     }

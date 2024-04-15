@@ -3,21 +3,29 @@ import './App.css';
 import Person from './Person/Person.js';
 
 class App extends Component {
-     state = {
+     //inline css
+  state = {
       persons :[
         {name:'John', age : 32},
         {name:'Felix', age :22}
       ],
-      otherState:'Some other value'
+      otherState:'Some other value',
+      showcasePerson: false
     }
     //event-handler
-  buttonOnClickHandler= ()=>{
-      //this.state.persons[0].name = 'Deshan' cant change state ogf this app like this      
+  buttonToggleHandler= ()=>{
+      let showcasePersonBool = this.state.showcasePerson
       this.setState({
-         persons: [
-            {name:'John After One year', age : 33},
-            {name:'Felix  After One year', age :23}
-         ]
+        showcasePerson :  !(showcasePersonBool)
+      })
+    }
+
+    inputNameChangeHandler = (event) => {
+      this.setState({
+        persons:[
+          {name:'John', age : 32},
+          {name:event.target.value, age :22}
+        ]
       })
     }
       //return  React.createElement(
@@ -25,21 +33,37 @@ class App extends Component {
       //);
     render()
     {
+        const style= {
+          backgroundColor: 'white',
+          border : '1px solid green',
+          padding:'8px'
+        };
+
+
+
         return(
           <div className="App">
             <h1>Test</h1> 
-            <button onClick={this.buttonOnClickHandler}>Switch Name</button>
-            <Person 
-              Name={this.state.persons[0].name}
-              Age={this.state.persons[0].age}
-              ClickHandler={this.buttonOnClickHandler}
-            />
-            <Person 
-              Name={this.state.persons[1].name} 
-              Age={this.state.persons[1].age}
-              ClickHandler={this.buttonOnClickHandler}> 
-              RandomFella
-               </Person>
+            <button onClick={this.buttonToggleHandler} style={style}>
+             Toggle Name
+              </button>
+              {
+                this.state.showcasePerson ?
+                  <div>
+                    <Person 
+                      Name={this.state.persons[0].name}
+                      Age={this.state.persons[0].age}
+                    />
+
+                      <Person 
+                        Name={this.state.persons[1].name} 
+                        Age={this.state.persons[1].age}
+                        inputNameHandler = {this.inputNameChangeHandler}/> 
+                  </div>
+                  : null
+
+              }
+
           </div>
         ) 
     }

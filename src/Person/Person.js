@@ -8,7 +8,7 @@ const person = (props) => {
         <div className='Person' >
             <p>Hello Im {props.Name} & I'm  {props.Age} years old</p>
             <p>{props.children}</p>
-            <input type="text" onChange={props.inputNameHandler} value={props.Name} />
+            <input type="text" onChange={props.ChangePersonName} defaultValue={props.Name} />
             <button onClick={props.DeletePersonClick}>Delete</button>
         </div>
     );

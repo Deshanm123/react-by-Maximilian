@@ -3,7 +3,8 @@ import './App.css';
 import Person from './Person/Person.js';
 
 class App extends Component {
-     //inline css
+    
+  //inline css
   state = {
       persons :[
         {name:'John', age : 32},
@@ -12,21 +13,25 @@ class App extends Component {
       otherState:'Some other value',
       showcasePerson: false
     }
-    //event-handler
+
+    //toggle the show case on btn click
     buttonToggleHandler = ()=>{
       let showcasePersonBool = this.state.showcasePerson
       this.setState({
         showcasePerson : !(showcasePersonBool)
       })
     }
- 
-    inputNameChangeHandler = (event) => {
-      this.setState({
-        persons:[
-          {name:'John', age : 32},
-          {name:event.target.value, age :22}
-        ]
-      })
+  
+    //change the name from input
+    personNameChangeHandler = (event,index) => {
+
+     // const selectedPerson = this.state.persons[index];
+
+      const persons = [... this.state.persons]
+      persons[index].name = event.target.value
+
+      this.setState({persons:persons})
+
     }
 
     deletePersonComponentHandler = (personIndex) => {
@@ -34,9 +39,7 @@ class App extends Component {
         persons.splice(personIndex,1);
         this.setState({ persons:persons});
     } 
-      //return  React.createElement(
-       // 'div',{className : 'App'}, React.createElement('h1',null,'testing the content')
-      //);
+   
     render()
     {
         const style = {
@@ -44,13 +47,19 @@ class App extends Component {
           border : '1px solid green',
           padding:'8px'
         };
-        
+
+        //populating the list
         let personShowCase = null;
         if(this.state.showcasePerson){
           personShowCase =  <div>
            {
               this.state.persons.map((person,index) => {
-                return <Person Name = {person.name} Age ={person.age}  DeletePersonClick = { () => this.deletePersonComponentHandler(index) } key={index} />;
+                return <Person 
+                        Name = {person.name} 
+                        Age = {person.age}  
+                        DeletePersonClick = { () => this.deletePersonComponentHandler(index) } 
+                        ChangePersonName = {(event)=>this.personNameChangeHandler(event,index)}
+                        key = {index} />;
               })
            }
           </div>

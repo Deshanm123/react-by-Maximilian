@@ -13,13 +13,13 @@ class App extends Component {
       showcasePerson: false
     }
     //event-handler
-  buttonToggleHandler= ()=>{
+    buttonToggleHandler = ()=>{
       let showcasePersonBool = this.state.showcasePerson
       this.setState({
-        showcasePerson :  !(showcasePersonBool)
+        showcasePerson : !(showcasePersonBool)
       })
     }
-
+ 
     inputNameChangeHandler = (event) => {
       this.setState({
         persons:[
@@ -28,32 +28,32 @@ class App extends Component {
         ]
       })
     }
+
+    deletePersonComponentHandler = (personIndex) => {
+        const persons = [...this.state.persons];
+        persons.splice(personIndex,1);
+        this.setState({ persons:persons});
+    } 
       //return  React.createElement(
        // 'div',{className : 'App'}, React.createElement('h1',null,'testing the content')
       //);
     render()
     {
-        const style= {
+        const style = {
           backgroundColor: 'white',
           border : '1px solid green',
           padding:'8px'
         };
-
+        
         let personShowCase = null;
         if(this.state.showcasePerson){
-          personShowCase = (
-            <div>
-              <Person 
-                Name={this.state.persons[0].name}
-                Age={this.state.persons[0].age}
-              />
-              <Person 
-                Name={this.state.persons[1].name} 
-                Age={this.state.persons[1].age}
-                inputNameHandler = {this.inputNameChangeHandler}/> 
-            </div>
-          );
-
+          personShowCase =  <div>
+           {
+              this.state.persons.map((person,index) => {
+                return <Person Name = {person.name} Age ={person.age}  DeletePersonClick = { () => this.deletePersonComponentHandler(index) } key={index} />;
+              })
+           }
+          </div>
         }
 
         return(
@@ -64,7 +64,7 @@ class App extends Component {
               </button>
               {personShowCase}
           </div>
-        ) 
+        )
     }
     
 }
